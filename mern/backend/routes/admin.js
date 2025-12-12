@@ -1,0 +1,27 @@
+import express from "express";
+import { getUserData } from "../controller/AdminController.js";
+import { getItems } from "../controller/AdminController.js";
+import { AuthenticatedUser } from "../middleware/itemAuthenticatedUser.js";
+import { deleteUser } from "../controller/AdminController.js";
+import { totalUsers } from "../controller/AdminController.js";
+import { totalItems } from "../controller/AdminController.js";
+import { totalCategories } from "../controller/AdminController.js";
+import { paidOrders } from "../controller/AdminController.js";
+import { notpaidOrders } from "../controller/AdminController.js";
+import { todaySignups } from "../controller/AdminController.js";
+import { totalSales } from "../controller/AdminController.js";
+import { displayOrders } from "../controller/AdminController.js";
+const AdminRoutes = express.Router();
+
+AdminRoutes.get('/users',AuthenticatedUser,getUserData);
+AdminRoutes.get('/display-items',getItems);
+AdminRoutes.get("/display-orders",AuthenticatedUser,displayOrders);
+AdminRoutes.delete("/delete/:userId",AuthenticatedUser,deleteUser);
+AdminRoutes.get("/total-users",AuthenticatedUser,totalUsers);
+AdminRoutes.get("/total-items",AuthenticatedUser,totalItems);
+AdminRoutes.get("/total-categories",AuthenticatedUser,totalCategories);
+AdminRoutes.get("/paid-orders",AuthenticatedUser,paidOrders);
+AdminRoutes.get("/unpaid-orders",AuthenticatedUser,notpaidOrders);
+AdminRoutes.get("/todays-signups",AuthenticatedUser,todaySignups);
+AdminRoutes.get("/total-sales",AuthenticatedUser,totalSales);
+export default AdminRoutes;

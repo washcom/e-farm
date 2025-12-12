@@ -1,0 +1,22 @@
+import express from 'express';
+import { AuthenticatedUser } from '../middleware/itemAuthenticatedUser.js';
+import { createOrder } from '../controller/orderController.js';
+import { getUserOrders } from '../controller/orderController.js';
+import { authenticatedUserTotalOrders } from '../controller/orderController.js';
+import { oneOrder } from '../controller/orderController.js'
+import { cancelOrder } from '../controller/orderController.js';
+import { isPaid } from '../controller/orderController.js';
+import { paidOrders } from '../controller/orderController.js';
+import { unpaidOrders } from '../controller/orderController.js';
+import { revenue } from '../controller/orderController.js';
+const orderRouter = express.Router();
+orderRouter.post("/place-order",AuthenticatedUser,createOrder);
+orderRouter.get("/my-orders",AuthenticatedUser,getUserOrders);
+orderRouter.get("/my-total-orders",AuthenticatedUser,authenticatedUserTotalOrders);
+orderRouter.get("/one-order/:orderId",AuthenticatedUser,oneOrder);
+orderRouter.delete("/cancel-order/:orderId",AuthenticatedUser, cancelOrder);
+orderRouter.get("/is-order-paid/:orderId",AuthenticatedUser,isPaid);
+orderRouter.get("/total-paid-orders",AuthenticatedUser,paidOrders);
+orderRouter.get("/total-pending-orders",AuthenticatedUser,unpaidOrders);
+orderRouter.get("/revenue",AuthenticatedUser,revenue);
+export default orderRouter;
